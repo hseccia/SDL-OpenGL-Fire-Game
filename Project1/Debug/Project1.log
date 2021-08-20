@@ -1,14 +1,14 @@
 ﻿  main.cpp
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(355,38): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(355,75): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(355,129): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(356,38): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(356,75): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(356,129): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(358,36): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(358,73): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(358,127): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(359,36): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(359,73): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
-C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(359,127): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(396,38): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(396,75): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(396,129): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(397,38): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(397,75): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(397,129): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(399,36): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(399,73): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(399,127): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(400,36): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(400,73): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
+C:\Users\hseccia\source\repos\Project1\Project1\main.cpp(400,127): warning C4838: conversion from 'float' to 'Sint16' requires a narrowing conversion
   Project1.vcxproj -> C:\Users\hseccia\source\repos\Project1\Debug\Project1.exe

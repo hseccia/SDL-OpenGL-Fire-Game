@@ -61,6 +61,8 @@ Vector2D* startPerpVector = new Vector2D(startingVector->getX() * 1.5, startingV
 SDL_Rect player;
 SDL_Texture* playerBaseTexture;
 
+Vector2D* playerRaycast;
+
 ////////////////////////////////////////////////////////////////////
 /////////////              SDL INIT FUNCTION         ///////////////
 ////////////////////////////////////////////////////////////////////
@@ -277,7 +279,6 @@ int fillPolygonRGB(SDL_Renderer* renderer, const Sint16* vertexX, const Sint16* 
 void fireCollision()
 {
     Vector2D* vectorScreenCoords[3] = {};                                            //list of vectors relative to screen positions (so more like coordinates on a screen)
-    //NEXT STEP (MAKE A RAYCAST)
 
 
     vectorScreenCoords[0] = new Vector2D(originPointX, originPointY);
@@ -285,7 +286,7 @@ void fireCollision()
 
     if (polygonZoneActivate == UPPER_POLYGON)
     {
-        vectorScreenCoords[1] = new Vector2D(startingVector->getX() + originPointX, startingVector->getY() + originPointY);      
+        vectorScreenCoords[1] = new Vector2D(startingVector->getX() + originPointX, startingVector->getY() + originPointY);
         //SECOND VECTOR = since it is UPPER, the starting vector's "end" point on the screen
 
         vectorScreenCoords[2] = new Vector2D(startingVector->getX() + originPointX - startConnectingVector->getX(), startingVector->getY() + originPointY - startConnectingVector->getY());
@@ -300,22 +301,29 @@ void fireCollision()
         //THIRD VECTOR = since it is on LOWER, the adjacent connector's points "end" point on the screen
     }
 
-    int nextIndex = 0;              //since we will need to see any vertex in this list
+    int playerBoxRadius = player.w / 2;             //the radius of the player box 
+    Vector2D* playerBoxMiddlePoint = new Vector2D(player.x + playerBoxRadius, player.y + playerBoxRadius);
+    //the coord point of the middle of the player
 
-    for (int i = 0; i < 3; i++)
+    Vector2D* generatedFrontVector;                 //the vector that will represent either the start or adjacent connecting vector
+                                                    //(will be the equivalent of a "direction" vector)
+
+    if (polygonZoneActivate == UPPER_POLYGON)
     {
-        nextIndex = i + 1;
-
-        if (nextIndex == 3)         //to prevent wrap around at the end
-        {
-            nextIndex = 0;      
-        }
-
-        //remember that [i] will equal the current vector and nextIndex will equal the next one
-
-        //if 
-            //(((vectorScreenCoords[i]->getY() ))
+        generatedFrontVector = startConnectingVector;
     }
+    else if (polygonZoneActivate == LOWER_POLYGON)
+    {
+        generatedFrontVector = adjConnectingVector;
+    }
+
+    //this code is beginning the process of finding the distance between the middle point and the front vector (line)
+    //a right triangle will be created from this line, which will make a perpendicular line from point to line to measure with
+    //(for more info see notes)
+
+    Vector2D* frontOriginToPoint = new Vector2D(playerBoxMiddlePoint->getX() - vectorScreenCoords[1]->getX(),
+                                                playerBoxMiddlePoint->getY() - vectorScreenCoords[1]->getY());
+    //this code follows the (x2-x1, y2-y1) formula to generate a line
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -386,11 +394,17 @@ void mainLoop()
         SDL_RenderDrawLine(glRenderer, adjacentVector->getX()+originPointX, adjacentVector->getY()+originPointY, adjacentVector->getX() + originPointX + adjConnectingVector->getX(), adjacentVector->getY() + originPointY + adjConnectingVector->getY());
         SDL_RenderDrawLine(glRenderer, startingVector->getX() + originPointX, startingVector->getY() + originPointY, startingVector->getX() + originPointX - startConnectingVector->getX(), startingVector->getY() + originPointY - startConnectingVector->getY());
 
+        SDL_RenderDrawPoint(glRenderer, player.x, player.y);
+        SDL_RenderDrawPoint(glRenderer, player.x+35, player.y+35);
+
+        SDL_RenderDrawLine(glRenderer, player.x + 35, player.y + 35, player.x, player.y + 35);
+
         Sint16 xStartVertexes[3] = { originPointX, startingVector->getX() + originPointX, startingVector->getX() + originPointX - startConnectingVector->getX() };  //get x-coords for first polygon generated
         Sint16 yStartVertexes[3] = { originPointY, startingVector->getY() + originPointY, startingVector->getY() + originPointY - startConnectingVector->getY() };  //get y-coords for first polygon generated
             
         Sint16 xAdjVertexes[3] = { originPointX, adjacentVector->getX() + originPointX, adjacentVector->getX() + originPointX + adjConnectingVector->getX() };   //get x-coords for second polygon generated
         Sint16 yAdjVertexes[3] = { originPointY, adjacentVector->getY() + originPointY, adjacentVector->getY() + originPointY + adjConnectingVector->getY() };   //get y-coords for second polygon generated
+
         
         /// <summary>    /////
         /// FRAME-RELATED UPDATES ////
@@ -528,7 +542,7 @@ void calculateStartConnectingVector()
 void setupPlayer()
 {
     player.w = 70;
-    player.h = 80;
+    player.h = 70;
 
     player.x = 500;
     player.y = 300;
@@ -541,7 +555,6 @@ void setupPlayer()
         printf("texture failure\n");
         printf("%s\n", SDL_GetError());
     }
-
 }
 ////////////////////////////////////////////////////////////////////
 /////////////          INITIAL SETUP FUNCTION         ///////////////
