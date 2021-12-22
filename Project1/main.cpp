@@ -1,7 +1,6 @@
 #include<Windows.h>    
 #include<gl/GL.h>    
-#include<gl/GLU.h>    
-#include<gl/glut.h>
+#include<gl/GLU.h>
 #include<SDL.h>
 #include<SDL_image.h>
 #include<string>
@@ -33,14 +32,14 @@ const int screenWidth = 640;
 const int screenHeight = 480;
 
 float originPointX = screenWidth / 6;                               //the "0,0" point on the screen that we will base all vector math on
-float originPointY = screenHeight - (screenHeight / 6);             //the "0,0" point on the screen that we will base all vector math on
+float originPointY = screenHeight - (screenHeight / 4);             //the "0,0" point on the screen that we will base all vector math on
 
 
 SDL_Window* glWindow = NULL;                                //our window 
 
 SDL_Renderer* glRenderer = NULL;                            //our renderer
 
-Vector2D* startingVector = new Vector2D(float(200.0f), float(-200.0f));  // the base vector that all generation will be build on
+Vector2D* startingVector = new Vector2D(float(originPointY/2), float(-originPointY/2));  // the base vector that all generation will be build on
 
                                                                                    //  |    /  (starting vector)
                                                                                    //  |  /
@@ -56,7 +55,6 @@ bool adjacentBelowXAxis = false;
 int frameCount = 0;
 int polygonZoneActivate = 0;                                         //0 = start-connected polygon, 1 = adjacent connected polygon
 
-Vector2D* startPerpVector = new Vector2D(startingVector->getX() * 1.5, startingVector->getY());
 
 SDL_Rect player;
 SDL_Texture* playerBaseTexture;
@@ -389,7 +387,7 @@ void mainLoop()
         SDL_RenderDrawLine(glRenderer, originPointX, originPointY, startingVector->getX() + originPointX, startingVector->getY() + originPointY);                           //set up base (start, adjacent, and origin)
         SDL_RenderDrawLine(glRenderer, originPointX, originPointY, adjacentVector->getX() + originPointX, adjacentVector->getY() + originPointY);
         SDL_RenderDrawLine(glRenderer, originPointX, originPointY, xOriginVector->getX() + originPointX, xOriginVector->getY() + originPointY);
-        SDL_RenderDrawLine(glRenderer, startingVector->getX() + originPointX, startingVector->getY() + originPointY, startPerpVector->getX() + originPointX, startPerpVector->getY() + originPointY);
+       
 
         SDL_RenderDrawLine(glRenderer, adjacentVector->getX()+originPointX, adjacentVector->getY()+originPointY, adjacentVector->getX() + originPointX + adjConnectingVector->getX(), adjacentVector->getY() + originPointY + adjConnectingVector->getY());
         SDL_RenderDrawLine(glRenderer, startingVector->getX() + originPointX, startingVector->getY() + originPointY, startingVector->getX() + originPointX - startConnectingVector->getX(), startingVector->getY() + originPointY - startConnectingVector->getY());
@@ -471,13 +469,13 @@ float calcuateAngleFunction(Vector2D* vec1, Vector2D* vec2)
 Vector2D& calculateAdjacentVector() 
 {                                                                               
 
-    int newAngleDegrees = rand() % 90 + 10;                                           //generate a new angle between 10 and 90 degrees
+    int newAngleDegrees = rand() % 90 + -30;                                           //generate a new angle between 10 and 90 degrees
     float newAngleRadians = newAngleDegrees * 3.1415 / 180;                           //convert to radians to work with the trig functions
 
     printf("angle + %d\n", newAngleDegrees);
 
-    float newVectorX = startingVector->getX() * cos(newAngleRadians) - startingVector->getY() * sin(newAngleRadians);     //generate a new vector by making a copy of the starting vector and rotating it
-    float newVectorY = startingVector->getX() * sin(newAngleRadians) + startingVector->getY() * cos(newAngleRadians);     //
+    float newVectorX = xOriginVector->getX() * cos(newAngleRadians) - xOriginVector->getY() * sin(newAngleRadians);     //generate a new vector by making a copy of the starting vector and rotating it
+    float newVectorY = xOriginVector->getX() * sin(newAngleRadians) + xOriginVector->getY() * cos(newAngleRadians);     //
 
     Vector2D* adjacent = new Vector2D(newVectorX, newVectorY);
 
@@ -548,6 +546,7 @@ void setupPlayer()
     player.y = 300;
 
     SDL_Surface* playerBaseSurface = IMG_Load("BaseStance.png");
+
     playerBaseTexture = SDL_CreateTextureFromSurface(glRenderer, playerBaseSurface);
 
     if (playerBaseTexture == NULL)
@@ -580,14 +579,14 @@ int main(int argc, char** argv)
         setupPlayer();
         
 
-        int shit = int(startingVector->getX());
-        printf("starting vector x + %d\n", shit);
-        int shit2 = int(startingVector->getY());
-        printf("starting vector y + %d\n", shit2);
-        int shit3 = int(adjacentVector->getX());
-        printf("adjacent vector x + %d\n", shit3);
-        int shit4 = int(adjacentVector->getY());
-        printf("adjacent vector y + %d\n", shit4);
+        int startX = int(startingVector->getX());
+        printf("starting vector x + %d\n", startX);
+        int startY = int(startingVector->getY());
+        printf("starting vector y + %d\n", startY);
+        int startXAd = int(adjacentVector->getX());
+        printf("adjacent vector x + %d\n", startXAd);
+        int startYAd = int(adjacentVector->getY());
+        printf("adjacent vector y + %d\n", startYAd);
         printf("xOrigin + %f\n", xOriginVector->getX());
 
         mainLoop();
